@@ -6,6 +6,7 @@ from settings import *
 from sprites import *
 from os import path
 
+
 class Game:
     def __init__(self):
         # initialize game window, etc
@@ -208,6 +209,7 @@ class Game:
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x, y)
         self.screen.blit(text_surface, text_rect)
+
 
 g = Game()
 g.show_start_screen()
