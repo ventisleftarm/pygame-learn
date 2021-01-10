@@ -18,9 +18,16 @@ clock = pg.time.Clock()
 
 class Player(pg.sprite.Sprite):
     def __init__(self):
+        width=300
+        height=500
+        x=0
+        y=0
+        self.spritesheet = pg.image.load("hp.png").convert()
+        image = pg.Surface((width, height))
+        image.blit(self.spritesheet, (0, 0), (x, y, width, height))
+        image = pg.transform.scale(image, (width // 2, height // 2))
         pg.sprite.Sprite.__init__(self)
-        self.image = pg.Surface((64, 64))
-        self.image.fill(YELLOW)
+        self.image = image
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
 
@@ -32,14 +39,18 @@ class Player(pg.sprite.Sprite):
         if keystate[pg.K_DOWN]:
             self.vy = 5
         if keystate[pg.K_LEFT]:
-            self.vx = -2
+            self.vx = -5
         if keystate[pg.K_RIGHT]:
-            self.vx = 1
+            self.vx = 5
         if self.vx != 0 and self.vy != 0:
             self.vx /= 1.414
             self.vy /= 1.414
-        self.rect.x += self.vx
-        self.rect.y += self.vy
+        #if 0 < self.rect.x+self.vx < WIDTH:
+        #    self.rect.x += self.vx
+        #if 0 < self.rect.y+self.vy < HEIGHT:
+        #    self.rect.y += self.vy
+        self.rect.x=(self.rect.x+self.vx)%WIDTH
+        self.rect.y=(self.rect.y+self.vy)%HEIGHT
 
 all_sprites = pg.sprite.Group()
 player = Player()
