@@ -1,13 +1,15 @@
+"""quiditch.py is a simple quiditch inspired game using pygame. """
 import pygame as pg
 import time
 import random
 
+# globals
 WIDTH = 1000
 HEIGHT = 800
 FPS = 60
 SCORE = 0
-TIME = 0
-LAST_QUAFFLE_TIME = -1000
+TIME = 0  # number of frames since the start of the game
+LAST_QUAFFLE_TIME = -1000  # number of frames when the last quaffle was caught
 
 # define colors
 WHITE = (255, 255, 255)
@@ -21,12 +23,14 @@ screen = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption("Movement Example")
 clock = pg.time.Clock()
 
+
 class Player(pg.sprite.Sprite):
+    """class that contains Harry Potter"""
     def __init__(self):
-        width=300
-        height=500
-        x=0
-        y=0
+        width = 300
+        height = 500
+        x = 0
+        y = 0
         self.spritesheet = pg.image.load("hp.png").convert()
         image = pg.Surface((width, height))
         image.blit(self.spritesheet, (0, 0), (x, y, width, height))
@@ -37,6 +41,9 @@ class Player(pg.sprite.Sprite):
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
 
     def update(self):
+        """this function is called every times there is a new frame
+           it checks whether any of the the arrow keys are being pressed
+           and moves Harry Potter."""
         self.vx, self.vy = 0, 0
         keystate = pg.key.get_pressed()
         if keystate[pg.K_UP]:
@@ -50,19 +57,17 @@ class Player(pg.sprite.Sprite):
         if self.vx != 0 and self.vy != 0:
             self.vx /= 1.414
             self.vy /= 1.414
-        #if 0 < self.rect.x+self.vx < WIDTH:
-        #    self.rect.x += self.vx
-        #if 0 < self.rect.y+self.vy < HEIGHT:
-        #    self.rect.y += self.vy
-        self.rect.x=(self.rect.x+self.vx)%WIDTH
-        self.rect.y=(self.rect.y+self.vy)%HEIGHT
+        self.rect.x = (self.rect.x+self.vx) % WIDTH
+        self.rect.y = (self.rect.y+self.vy) % HEIGHT
+
 
 class Bludger(pg.sprite.Sprite):
+    """this class contains the bludger and the bludger moves randomly."""
     def __init__(self, vx=2, vy=-2, start_x=1/5, start_y=2/5):
-        width=220
-        height=229
-        x=0
-        y=0
+        width = 220
+        height = 229
+        x = 0
+        y = 0
         self.spritesheet = pg.image.load("bludger.jpg").convert()
         image = pg.Surface((width, height))
         image.blit(self.spritesheet, (0, 0), (x, y, width, height))
@@ -70,10 +75,11 @@ class Bludger(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.image = image
         self.rect = self.image.get_rect()
-        self.rect.center = (WIDTH *start_x, HEIGHT *start_y)
+        self.rect.center = (WIDTH * start_x, HEIGHT * start_y)
         self.vx, self.vy = vx, vy
 
     def update(self):
+        """this function is called every frame. it randomises the velocity of the bludger."""
         rand = random.randint(0, 100)
         if rand <= 1:
             self.vx = -self.vx
@@ -84,16 +90,16 @@ class Bludger(pg.sprite.Sprite):
         if 2 < rand <= 3:
             self.vx = self.vx
             self.vy = -self.vy
-        self.rect.x=(self.rect.x+self.vx)%WIDTH
-        self.rect.y=(self.rect.y+self.vy)%HEIGHT
+        self.rect.x = (self.rect.x+self.vx) % WIDTH
+        self.rect.y = (self.rect.y+self.vy) % HEIGHT
 
 
 class Snitch(pg.sprite.Sprite):
     def __init__(self):
-        width=288
-        height=175
-        x=0
-        y=0
+        width = 288
+        height = 175
+        x = 0
+        y = 0
         self.spritesheet = pg.image.load("snitch.jpg").convert()
         image = pg.Surface((width, height))
         image.blit(self.spritesheet, (0, 0), (x, y, width, height))
