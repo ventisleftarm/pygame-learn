@@ -29,9 +29,9 @@ print(return_random_list(20))
 
 
 @twr.timeit
-def sort_list(unsorted_list):
+def sort_list(unsorted_list, **kwargs):
     return unsorted_list.sort()
 
-
+log_time = {}
 sort_list(return_random_list(10000))
 sort_list(return_random_list(100000))
