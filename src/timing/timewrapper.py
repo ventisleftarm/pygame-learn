@@ -1,5 +1,6 @@
 """
 timeit wrapper.
+    https://medium.com/@lucasribeiro1990/thank-you-so-much-for-this-it-has-been-very-useful-for-me-aeb688ba6f3a
 """
 import time
 

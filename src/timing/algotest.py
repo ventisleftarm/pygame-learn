@@ -32,6 +32,14 @@ print(return_random_list(20))
 def sort_list(unsorted_list, **kwargs):
     return unsorted_list.sort()
 
-log_time = {}
-sort_list(return_random_list(10000))
-sort_list(return_random_list(100000))
+time_list = []
+length_list = [1e5,2e5,5e5,1e6,2e6,5e6]
+for i in length_list:
+    logtime_data ={}
+    sort_list(return_random_list(int(i)), log_time=logtime_data)
+    print(logtime_data)
+    time_list.append(logtime_data["SORT_LIST"])
+plt.plot(length_list, time_list, "x")
+plt.xlabel("length of list")
+plt.ylabel("time to sort (seconds)")
+plt.show()
